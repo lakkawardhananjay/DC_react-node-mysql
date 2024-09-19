@@ -30,8 +30,8 @@ jobs:
       # Step 3: Build and tag the Docker image
       - name: Build and Tag Docker Image
         run: |
-          docker build -t dhananjaylakkawar/frontend:latest -t dhananjaylakkawar/frontend:v1.0 -f  /frontend/Dockerfile .
-          docker build -t dhananjaylakkawar/backend:latest -t dhananjaylakkawar/backend:v1.0 -f /backend/Dockerfile .
+          docker build -t dhananjaylakkawar/frontend:latest -t dhananjaylakkawar/frontend:v1.0 -f  frontend/Dockerfile .
+          docker build -t dhananjaylakkawar/backend:latest -t dhananjaylakkawar/backend:v1.0 -f backend/Dockerfile .
            docker tag dhananjaylakkawar/frontend:latest dhananjaylakkawar/myserver:latest
           docker tag dhananjaylakkawar/frontend:v1.0 dhananjaylakkawar/myserver:v1.0
           docker tag dhananjaylakkawar/backend:latest dhananjaylakkawar/myserver_back:latest
