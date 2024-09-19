@@ -24,8 +24,8 @@ jobs:
       # Step 3: Build and tag the Docker image
       - name: Build and Tag Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest .
-          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/myserver:latest .
+          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/webserver:latest ${{ secrets.DOCKER_HUB_USERNAME }}/webserver:latest
 
       # Step 4: Push the image to Docker Hub
       - name: Push to Docker Hub
