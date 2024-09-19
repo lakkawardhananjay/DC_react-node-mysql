@@ -31,15 +31,15 @@ jobs:
       - name: Build and Tag Docker Image
         run: |
           docker-compose build
-          docker tag dhananjaylakkawar/3tier_app-frontend:latest dhananjaylakkawar/myserver:v1.0
-          docker tag dhananjaylakkawar/3tier_app-api:latest dhananjaylakkawar/myserver_back:v1.0
+          docker tag dhananjaylakkawar/frontend:latest dhananjaylakkawar/myserver:v1.0
+          docker tag dhananjaylakkawar/api:latest dhananjaylakkawar/myserver_back:v1.0
 
       # Step 4: Push the image to Docker Hub
       - name: Push to Docker Hub
         run: |
-         docker push dhananjaylakkawar/3tier_app-frontend:latest
+         docker push dhananjaylakkawar/frontend:latest
          docker push dhananjaylakkawar/myserver:v1.0
-         docker push dhananjaylakkawar/3tier_app-api:latest
+         docker push dhananjaylakkawar/api:latest
          docker push dhananjaylakkawar/myserver_back:v1.0
       # Step 5: Set up SSH agent to connect to EC2 instance
       - name: Set up SSH agent
