@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Build and Deploy to EC2
 
 on:
   push:
@@ -6,24 +6,44 @@ on:
       - main  # Change to your default branch
 
 jobs:
-  deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code from the repository
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+      # Step 2: Log in to Docker Hub using secrets
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      # Step 3: Build and tag the Docker image
+      - name: Build and Tag Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest .
+          docker tag ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+
+      # Step 4: Push the image to Docker Hub
+      - name: Push to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/webserver:latest
+
+      # Step 5: Set up SSH agent to connect to EC2 instance
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      # Step 6: Deploy to EC2 instance
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /path/to/your/app 
-            git pull origin main 
-            docker-compose up --build -d  
+            cd  ~/DC_react-node-mysql
+            docker-compose down  
+            docker-compose pull  
+            docker-compose up -d  
           EOF
