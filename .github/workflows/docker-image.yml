@@ -20,10 +20,10 @@ jobs:
 
     - name: Copy files to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -r ./docker-compose.yml ec2-user@${{ secrets.EC2_HOST }}:/home/ec2-user/app
+        scp -o StrictHostKeyChecking=no -r ./docker-compose.yml ubuntu@${{ secrets.EC2_HOST }}:/home/ec2-user/app
 
     - name: SSH into EC2 and run Docker-Compose
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} \
-        "cd /home/ec2-user/app && docker-compose down && docker-compose up -d --build"
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} \
+        "cd ./DC_react-node-mysql && docker-compose down && docker-compose up  --build"
 
