@@ -10,7 +10,7 @@ services:
     networks:
       - sameNetworkAsMysql 
     ports:
-      - 3307:3306 
+      - 3308:3306 
 
   api:
     build: 
@@ -28,7 +28,7 @@ services:
     build: 
       context: ./frontend
     ports:
-      - 3001:3000 
+      - 80:3000 
     networks:
       - sameNetworkAsMysql 
     depends_on:
