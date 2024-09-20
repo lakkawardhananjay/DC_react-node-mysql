@@ -25,5 +25,5 @@ jobs:
     - name: SSH into EC2 and run Docker-Compose
       run: |
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} \
-        "cd /home/ubuntu/DC_react-node-mysql && docker-compose down && docker-compose up  --build"
+        "cd /home/ubuntu/DC_react-node-mysql && sudo docker-compose down && sudo docker-compose up  --build"
 
