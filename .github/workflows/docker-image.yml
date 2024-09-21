@@ -12,7 +12,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+    - name: clone GitHub
+      uses: actions/checkout@v3
+      with:
+        repository: lakkawardhananjay/DC_react-node-mysql
+      
+    
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with: 
